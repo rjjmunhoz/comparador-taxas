@@ -1,0 +1,113 @@
+{
+  "_comentario": "Mantenha o array 'provedores' com os provedores reais. O objeto abaixo e apenas um exemplo da estrutura esperada. Taxas de credito sao divididas em 3 faixas de parcelamento (1x, 2x-6x, 7x-12x). Use null quando o provedor nao divulga a taxa daquela modalidade. 'observacoes' e opcional, para anotar incertezas da fonte.",
+  "_exemplo_estrutura_provedor": {
+    "nome": "Provedor Exemplo",
+    "tipo": ["maquininha", "gateway"],
+    "taxas": {
+      "debito": 1.39,
+      "credito_1x": 2.99,
+      "credito_2x_6x": 3.49,
+      "credito_7x_12x": 3.99,
+      "pix": 0.49,
+      "boleto": 3.49
+    },
+    "mensalidade": 0,
+    "taxa_adesao": 0,
+    "antecipacao_automatica": true,
+    "fonte": "link para a pagina oficial",
+    "atualizado_em": "2026-07-29",
+    "observacoes": "texto opcional sobre incertezas ou condicoes da taxa"
+  },
+  "provedores": [
+    {
+      "nome": "Cielo",
+      "tipo": ["maquininha", "gateway"],
+      "taxas": {
+        "debito": 1.90,
+        "credito_1x": 4.30,
+        "credito_2x_6x": 6.50,
+        "credito_7x_12x": 13.00,
+        "pix": 0.99,
+        "boleto": null
+      },
+      "mensalidade": 0,
+      "taxa_adesao": 0,
+      "antecipacao_automatica": false,
+      "fonte": "https://blog.cielo.com.br/produtos-e-servicos/taxas-da-cielo/",
+      "atualizado_em": "2026-07-29",
+      "observacoes": "Plano Cielo Smart, sem aluguel, faturamento ate R$15 mil/mes. Faixas de parcelado sao intervalos (2-6x: 6,50%-11,30%; 7-12x: 13,00%-19,00%) - usado o valor inicial de cada faixa. Pix em regime normal (0,99%; 0% nos primeiros 30 dias). Boleto e antecipacao nao confirmados."
+    },
+    {
+      "nome": "PagBank",
+      "tipo": ["maquininha", "gateway"],
+      "taxas": {
+        "debito": 1.44,
+        "credito_1x": 3.49,
+        "credito_2x_6x": 10.88,
+        "credito_7x_12x": 13.78,
+        "pix": null,
+        "boleto": null
+      },
+      "mensalidade": 0,
+      "taxa_adesao": 0,
+      "antecipacao_automatica": true,
+      "fonte": "https://pagbank.com.br/para-seu-negocio/maquininhas",
+      "atualizado_em": "2026-07-29",
+      "observacoes": "Taxas regulares (pos-promocao) do plano Super Max. Valores de parcelado sao exatos para 6x e 12x, nao 'a partir de'. Taxa de Pix inconsistente entre fontes (0% a 1,89%), por isso null."
+    },
+    {
+      "nome": "Mercado Pago",
+      "tipo": ["maquininha", "gateway"],
+      "taxas": {
+        "debito": 1.99,
+        "credito_1x": 4.98,
+        "credito_2x_6x": 9.90,
+        "credito_7x_12x": 21.43,
+        "pix": 0.49,
+        "boleto": null
+      },
+      "mensalidade": 0,
+      "taxa_adesao": 0,
+      "antecipacao_automatica": false,
+      "fonte": "https://www.mercadopago.com.br/blog/taxa-progressiva-point-mercado-pago",
+      "atualizado_em": "2026-07-29",
+      "observacoes": "Faixa de faturamento ate R$3 mil/mes (a mais baixa/padrao). Valor 7x-12x e especificamente o de 12x. Antecipacao D+0 e paga (3,99% a 4,99% adicional); D+14 padrao nao e automatica."
+    },
+    {
+      "nome": "SumUp",
+      "tipo": ["maquininha", "gateway"],
+      "taxas": {
+        "debito": 1.49,
+        "credito_1x": 2.99,
+        "credito_2x_6x": 4.99,
+        "credito_7x_12x": 6.99,
+        "pix": 0,
+        "boleto": null
+      },
+      "mensalidade": 0,
+      "taxa_adesao": 0,
+      "antecipacao_automatica": false,
+      "fonte": "https://www.sumup.com/pt-br/gestao-de-cobranca/taxas/",
+      "atualizado_em": "2026-07-29",
+      "observacoes": "Fonte mais fraca do conjunto: numeros vieram de fontes secundarias convergentes sobre a maquininha SumUp Total, nao de uma pagina oficial dedicada a ela. Recomenda-se checar manualmente antes de publicar."
+    },
+    {
+      "nome": "InfinitePay",
+      "tipo": ["maquininha", "gateway"],
+      "taxas": {
+        "debito": 1.37,
+        "credito_1x": 3.15,
+        "credito_2x_6x": 5.39,
+        "credito_7x_12x": 8.99,
+        "pix": 0,
+        "boleto": null
+      },
+      "mensalidade": 0,
+      "taxa_adesao": 0,
+      "antecipacao_automatica": false,
+      "fonte": "https://www.infinitepay.io/taxas",
+      "atualizado_em": "2026-07-29",
+      "observacoes": "Faixa 1 (ate R$20 mil/mes). Parcelado 2-6x e 7-12x sao intervalos 'a partir de' - usado o valor inicial. Antecipacao e sob demanda e paga, nao automatica."
+    }
+  ]
+}
