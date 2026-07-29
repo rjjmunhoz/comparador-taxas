@@ -19,12 +19,12 @@ const numberFormatter = new Intl.NumberFormat("pt-BR", {
 });
 
 const CATEGORIAS = [
-  { chave: "debito", taxaKey: "debito", rotulo: "Débito" },
-  { chave: "credito1x", taxaKey: "credito_1x", rotulo: "Crédito 1x" },
-  { chave: "credito2x6x", taxaKey: "credito_2x_6x", rotulo: "Crédito 2x-6x" },
-  { chave: "credito7x12x", taxaKey: "credito_7x_12x", rotulo: "Crédito 7x-12x" },
-  { chave: "pix", taxaKey: "pix", rotulo: "Pix" },
-  { chave: "boleto", taxaKey: "boleto", rotulo: "Boleto" },
+  { chave: "debito", taxaKey: "debito", rotulo: "Débito", inputId: "pctDebito" },
+  { chave: "credito1x", taxaKey: "credito_1x", rotulo: "Crédito 1x", inputId: "pctCredito1x" },
+  { chave: "credito2x6x", taxaKey: "credito_2x_6x", rotulo: "Crédito 2x-6x", inputId: "pctCredito2x6x" },
+  { chave: "credito7x12x", taxaKey: "credito_7x_12x", rotulo: "Crédito 7x-12x", inputId: "pctCredito7x12x" },
+  { chave: "pix", taxaKey: "pix", rotulo: "Pix", inputId: "pctPix" },
+  { chave: "boleto", taxaKey: "boleto", rotulo: "Boleto", inputId: "pctBoleto" },
 ];
 
 let provedores = [];
@@ -50,6 +50,14 @@ function toNumber(value) {
   return Number.parseFloat(value) || 0;
 }
 
+function lerPercentuais() {
+  const percentuais = {};
+  CATEGORIAS.forEach((cat) => {
+    percentuais[cat.chave] = toNumber(document.getElementById(cat.inputId).value);
+  });
+  return percentuais;
+}
+
 function validarPercentuais(percentuais) {
   const soma = CATEGORIAS.reduce((acc, cat) => acc + percentuais[cat.chave], 0);
 
@@ -57,6 +65,13 @@ function validarPercentuais(percentuais) {
     soma,
     valido: Math.abs(soma - 100) < 0.01,
   };
+}
+
+function atualizarSomaAoVivo() {
+  const validacao = validarPercentuais(lerPercentuais());
+  infoEl.textContent = `Soma atual: ${numberFormatter.format(validacao.soma)}% (precisa ser 100%)`;
+  infoEl.classList.toggle("valido", validacao.valido);
+  return validacao;
 }
 
 function calcularCustoMensal(volumeMensal, ticketMedio, percentuais, provedor) {
@@ -238,23 +253,14 @@ form.addEventListener("submit", (event) => {
 
   const volumeMensal = toNumber(document.getElementById("volumeMensal").value);
   const ticketMedio = toNumber(document.getElementById("ticketMedio").value);
-
-  const percentuais = {
-    debito: toNumber(document.getElementById("pctDebito").value),
-    credito1x: toNumber(document.getElementById("pctCredito1x").value),
-    credito2x6x: toNumber(document.getElementById("pctCredito2x6x").value),
-    credito7x12x: toNumber(document.getElementById("pctCredito7x12x").value),
-    pix: toNumber(document.getElementById("pctPix").value),
-    boleto: toNumber(document.getElementById("pctBoleto").value),
-  };
+  const percentuais = lerPercentuais();
 
   if (volumeMensal <= 0 || ticketMedio <= 0) {
     erroEl.textContent = "Informe volume mensal e ticket médio maiores que zero.";
     return;
   }
 
-  const validacao = validarPercentuais(percentuais);
-  infoEl.textContent = `Soma atual: ${numberFormatter.format(validacao.soma)}%`;
+  const validacao = atualizarSomaAoVivo();
 
   if (!validacao.valido) {
     erroEl.textContent = "A soma dos percentuais deve ser exatamente 100%.";
@@ -291,5 +297,14 @@ form.addEventListener("submit", (event) => {
 [catalogoFiltroMaquininha, catalogoFiltroGateway].forEach((el) => {
   el.addEventListener("change", renderCatalogo);
 });
+
+CATEGORIAS.forEach((cat) => {
+  document.getElementById(cat.inputId).addEventListener("input", () => {
+    erroEl.textContent = "";
+    atualizarSomaAoVivo();
+  });
+});
+
+atualizarSomaAoVivo();
 
 carregarProvedores();

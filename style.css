@@ -120,6 +120,12 @@ button:hover {
   margin: 10px 0 0;
   color: var(--muted);
   font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.hint.valido {
+  color: var(--primary);
 }
 
 .error {
