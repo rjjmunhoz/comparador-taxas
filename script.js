@@ -7,6 +7,7 @@ const filtroGateway = document.getElementById("filtroGateway");
 const catalogoEl = document.getElementById("catalogo");
 const catalogoFiltroMaquininha = document.getElementById("catalogoFiltroMaquininha");
 const catalogoFiltroGateway = document.getElementById("catalogoFiltroGateway");
+const btnNormalizar = document.getElementById("btnNormalizar");
 
 const moneyFormatter = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -72,6 +73,33 @@ function atualizarSomaAoVivo() {
   infoEl.textContent = `Soma atual: ${numberFormatter.format(validacao.soma)}% (precisa ser 100%)`;
   infoEl.classList.toggle("valido", validacao.valido);
   return validacao;
+}
+
+function normalizarPercentuais() {
+  const percentuais = lerPercentuais();
+  const soma = CATEGORIAS.reduce((acc, cat) => acc + percentuais[cat.chave], 0);
+
+  if (soma <= 0) {
+    erroEl.textContent = "Preencha ao menos um campo de distribuição antes de ajustar.";
+    return;
+  }
+
+  const fator = 100 / soma;
+  let somaParcial = 0;
+
+  CATEGORIAS.forEach((cat, indice) => {
+    const input = document.getElementById(cat.inputId);
+    const ultimo = indice === CATEGORIAS.length - 1;
+    const valor = ultimo
+      ? Math.round((100 - somaParcial) * 100) / 100
+      : Math.round(percentuais[cat.chave] * fator * 100) / 100;
+
+    somaParcial += valor;
+    input.value = valor;
+  });
+
+  erroEl.textContent = "";
+  atualizarSomaAoVivo();
 }
 
 function calcularCustoMensal(volumeMensal, ticketMedio, percentuais, provedor) {
@@ -304,6 +332,8 @@ CATEGORIAS.forEach((cat) => {
     atualizarSomaAoVivo();
   });
 });
+
+btnNormalizar.addEventListener("click", normalizarPercentuais);
 
 atualizarSomaAoVivo();
 

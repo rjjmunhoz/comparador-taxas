@@ -128,6 +128,33 @@ button:hover {
   color: var(--primary);
 }
 
+.soma-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.soma-linha .hint {
+  margin: 10px 0 0;
+}
+
+.btn-secundario {
+  margin-top: 10px;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 6px 12px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.btn-secundario:hover {
+  background: #f0fdfa;
+}
+
 .error {
   min-height: 1.2em;
   margin: 8px 0 0;
