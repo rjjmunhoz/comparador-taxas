@@ -1,5 +1,5 @@
 {
-  "_comentario": "Mantenha o array 'provedores' com os provedores reais. O objeto abaixo e apenas um exemplo da estrutura esperada. Taxas de credito sao divididas em 3 faixas de parcelamento (1x, 2x-6x, 7x-12x). Use null quando o provedor nao divulga a taxa daquela modalidade. 'observacoes' e opcional, para anotar incertezas da fonte.",
+  "_comentario": "Mantenha o array 'provedores' com os provedores reais. O objeto abaixo e apenas um exemplo da estrutura esperada. Taxas de credito sao divididas em 3 faixas de parcelamento (1x, 2x-6x, 7x-12x). Use null quando o provedor nao divulga a taxa daquela modalidade. 'observacoes' e opcional, para anotar incertezas da fonte. Nota sobre boleto: nos provedores pesquisados ate agora, boleto nao e forma de pagamento na maquininha fisica - vive num produto separado de cobranca online, muitas vezes cobrado como valor FIXO em R$ por boleto (nao %). Se encontrar so o valor fixo, NAO force esse numero no campo percentual 'boleto' - deixe null e documente o valor fixo em 'observacoes'.",
   "_exemplo_estrutura_provedor": {
     "nome": "Provedor Exemplo",
     "tipo": ["maquininha", "gateway"],
@@ -35,7 +35,7 @@
       "antecipacao_automatica": false,
       "fonte": "https://blog.cielo.com.br/produtos-e-servicos/taxas-da-cielo/",
       "atualizado_em": "2026-07-29",
-      "observacoes": "Plano Cielo Smart, sem aluguel, faturamento ate R$15 mil/mes. Faixas de parcelado sao intervalos (2-6x: 6,50%-11,30%; 7-12x: 13,00%-19,00%) - usado o valor inicial de cada faixa. Pix em regime normal (0,99%; 0% nos primeiros 30 dias). Boleto e antecipacao nao confirmados."
+      "observacoes": "Plano Cielo Smart, sem aluguel, faturamento ate R$15 mil/mes. Faixas de parcelado sao intervalos (2-6x: 6,50%-11,30%; 7-12x: 13,00%-19,00%) - usado o valor inicial de cada faixa. Pix em regime normal (0,99%; 0% nos primeiros 30 dias). Boleto nao e forma de pagamento na maquininha (so cartao e Pix); Cielo tem um produto separado 'Cielo Boleto' para e-commerce sem tarifario publico."
     },
     {
       "nome": "PagBank",
@@ -53,7 +53,7 @@
       "antecipacao_automatica": true,
       "fonte": "https://pagbank.com.br/para-seu-negocio/maquininhas",
       "atualizado_em": "2026-07-29",
-      "observacoes": "Taxas regulares (pos-promocao) do plano Super Max. Valores de parcelado sao exatos para 6x e 12x, nao 'a partir de'. Taxa de Pix inconsistente entre fontes (0% a 1,89%), por isso null."
+      "observacoes": "Taxas regulares (pos-promocao) do plano Super Max. Valores de parcelado sao exatos para 6x e 12x, nao 'a partir de'. Pix: pagina oficial de taxas so informa '0% nos primeiros 30 dias' sem revelar a taxa padrao depois disso; FAQ oficial cita separadamente um teto de 1,89%. As duas paginas oficiais se contradizem, entao mantido null. Boleto so existe no produto 'Gestao de Cobranca' (conta/online, nao a maquininha), anunciado como 'tarifa zero' mas com ressalva de que pode mudar sem aviso - sem valor estavel para publicar."
     },
     {
       "nome": "Mercado Pago",
@@ -71,7 +71,7 @@
       "antecipacao_automatica": false,
       "fonte": "https://www.mercadopago.com.br/blog/taxa-progressiva-point-mercado-pago",
       "atualizado_em": "2026-07-29",
-      "observacoes": "Faixa de faturamento ate R$3 mil/mes (a mais baixa/padrao). Valor 7x-12x e especificamente o de 12x. Antecipacao D+0 e paga (3,99% a 4,99% adicional); D+14 padrao nao e automatica."
+      "observacoes": "Faixa de faturamento ate R$3 mil/mes (a mais baixa/padrao). Valor 7x-12x e especificamente o de 12x. Antecipacao D+0 e paga (3,99% a 4,99% adicional); D+14 padrao nao e automatica. Boleto nao e forma de pagamento na maquininha Point; existe via ferramenta de cobranca online como valor FIXO em R$ (nao %): R$1,99 por boleto compensado via 'Cobrar', ou R$3,49 via Link de Pagamento/Checkout. Nao cabe no campo percentual 'boleto', por isso mantido null."
     },
     {
       "nome": "SumUp",
@@ -89,7 +89,7 @@
       "antecipacao_automatica": false,
       "fonte": "https://www.sumup.com/pt-br/gestao-de-cobranca/taxas/",
       "atualizado_em": "2026-07-29",
-      "observacoes": "Fonte mais fraca do conjunto: numeros vieram de fontes secundarias convergentes sobre a maquininha SumUp Total, nao de uma pagina oficial dedicada a ela. Recomenda-se checar manualmente antes de publicar."
+      "observacoes": "Fonte mais fraca do conjunto: numeros vieram de fontes secundarias convergentes sobre a maquininha SumUp Total, nao de uma pagina oficial dedicada a ela. Recomenda-se checar manualmente antes de publicar. Boleto existe na 'Gestao de Cobranca' (produto de conta online), mas nenhuma pagina oficial divulga o valor da tarifa - mantido null."
     },
     {
       "nome": "InfinitePay",
@@ -107,7 +107,7 @@
       "antecipacao_automatica": false,
       "fonte": "https://www.infinitepay.io/taxas",
       "atualizado_em": "2026-07-29",
-      "observacoes": "Faixa 1 (ate R$20 mil/mes). Parcelado 2-6x e 7-12x sao intervalos 'a partir de' - usado o valor inicial. Antecipacao e sob demanda e paga, nao automatica."
+      "observacoes": "Faixa 1 (ate R$20 mil/mes). Parcelado 2-6x e 7-12x sao intervalos 'a partir de' - usado o valor inicial. Antecipacao e sob demanda e paga, nao automatica. Boleto existe so na 'Gestao de Cobrancas' (conta online); a tabela oficial de taxas (infinitepay.io/taxas) lista Pix e cartao mas nao boleto - mantido null."
     }
   ]
 }
