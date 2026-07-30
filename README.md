@@ -4,21 +4,28 @@ Site estático para comparar o custo mensal estimado entre maquininhas e gateway
 
 ## Stack
 
-- HTML, CSS e JavaScript puros — sem build, sem dependências.
-- `data.json` como "banco de dados": array de provedores com taxas, mensalidade, taxa de adesão, antecipação e fonte oficial.
+- React + Vite.
+- `src/data.json` como "banco de dados": array de provedores com taxas, mensalidade, taxa de adesão, antecipação e fonte oficial (importado direto no bundle, sem fetch em runtime).
+- `src/lib/calculo.js` concentra a lógica de cálculo/validação; `src/components` tem os componentes de UI.
 
 ## Rodando localmente
 
-Como o `script.js` usa `fetch("data.json")`, é preciso servir os arquivos por HTTP (não abrir o `index.html` direto via `file://`):
-
 ```bash
-python -m http.server 8000
+npm install
+npm run dev
 ```
 
-Depois acesse `http://localhost:8000`.
+Depois acesse o endereço impresso no terminal (por padrão `http://localhost:5173`).
+
+Para gerar o build de produção (o que o Vercel roda no deploy):
+
+```bash
+npm run build
+npm run preview   # opcional, serve o build localmente
+```
 
 ## Dados dos provedores
 
-Cada registro em `data.json` segue a estrutura documentada em `_exemplo_estrutura_provedor`. Ao adicionar ou atualizar um provedor, use apenas taxas confirmadas em fonte oficial pública — se não houver tarifário público confiável, prefira deixar o provedor de fora a estimar um número.
+Cada registro em `src/data.json` segue a estrutura documentada em `_exemplo_estrutura_provedor`. Ao adicionar ou atualizar um provedor, use apenas taxas confirmadas em fonte oficial pública — se não houver tarifário público confiável, prefira deixar o provedor de fora a estimar um número.
 
 ⚠️ Os valores exibidos no site são estimativas com base em taxas públicas; as taxas reais variam por negociação, volume e plano contratado.
